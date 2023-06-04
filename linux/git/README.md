@@ -1,5 +1,18 @@
 # Git
 
+## Squash commits
+```
+
+```
+
+## Configure
+```
+git config core.autocrlf true
+git config user.name "Rupert Murdoch"
+git config user.email rupert.murdoch@gmail.com
+
+```
+
 ## Show log
 
 ```

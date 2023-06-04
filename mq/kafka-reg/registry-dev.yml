@@ -1,0 +1,37 @@
+version: '3.9'
+services:
+  registry-db:
+    container_name: reg-db
+    image: mysql:5.7.17
+    ports:
+      - 3307:3306
+    volumes:
+      - ./containers/registry-db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - dp-messaging-hub-registry-net
+    environment:
+      MYSQL_ROOT_PASSWORD: *****
+      MYSQL_DATABASE: db
+      MYSQL_USER: scott
+      MYSQL_PASSWORD: ****
+
+  registry-app:
+    container_name: reg-app
+    image: thebookpeople/hortonworks-registry:latest
+    ports:
+      - 9090:9090
+    networks:
+      - dp-messaging-hub-registry-net
+    environment:
+      DB_NAME: db
+      DB_USER: scott
+      DB_PASSWORD: **
+      DB_PORT: 3306
+      DB_HOST: registry-db
+      REGISTRY_HEAP_OPTS: "-Xmx16G -Xms1G"
+    depends_on:
+      - registry-db
+
+networks:
+  dp-messaging-hub-registry-net:
+    driver: bridge

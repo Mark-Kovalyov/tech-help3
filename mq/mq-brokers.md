@@ -13,8 +13,9 @@
 
 ## Protocols
 
-- AMQP (Advanced Message Queuing Protocol). Exchange/fanout/direct/topic. Message. Queue. 
-- 
+* AMQP (Advanced Message Queuing Protocol). Exchange/fanout/direct/topic. Message. Queue.
+* MQTT  message queuing telemetry transport
+	* Publisher-Subscriber
 
 ## Tools
 
@@ -24,12 +25,39 @@
 * amqp-consume
 * amqp-get
 
+## MQTT C/Java libraries
+
+* Eclipse Paho (Client)
+  * https://github.com/eclipse/paho.mqtt.c/releases
+* Mosquitto (broker)
+  * https://mosquitto.org/documentation/
+* EMQX - is an Open-source MQTT
+  (opens new window) broker with a high-performance real-time message processing engine, powering event streaming for IoT devices at massive scale. As the most scalable MQTT broker, EMQX can help you connect any device, at any scale. Move and process your IoT data anywhere.
+	* https://www.emqx.io/docs/en/v5.0/
+
+### MQTT Java
+
+```xml
+<dependency>
+  <groupId>org.eclipse.paho</groupId>
+  <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+  <version>1.2.0</version>
+</dependency>
+```
+
+```java
+String publisherId = UUID.randomUUID().toString();
+IMqttClient publisher = new MqttClient("tcp://iot.eclipse.org:1883",publisherId);
+
+subscriber.subscribe(EngineTemperatureSensor.TOPIC, (topic, msg) -> {
+    byte[] payload = msg.getPayload();
+});
+```
+
+
+
 ## Links
 
 Other Open-source Java JMS implementations
 
 https://java-source.net/open-source/jms
-
-
-	
-
