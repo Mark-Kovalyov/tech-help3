@@ -1,0 +1,7 @@
+function ::= 'OVER' window_name | '(' window_name ')' | window_spec
+
+function ::= ranking_function | analytic_function | aggregate_function
+
+over_clause ::= 'OVER' { window_name | ( window_name ) | window_spec }
+
+window_spec ::=  '('  ')'

@@ -1,0 +1,45 @@
+[
+  {
+    "namespace":"mayton.probeavro.emp",
+    "type" : "record",
+    "name" : "Emp",
+    "doc"  : "Employee table",
+    "fields" : [
+      { "name" : "EMPNO",    "type" : "int" },
+      { "name" : "ENAME",    "type" : "string" },
+      { "name" : "JOB",
+        "type" : {
+          "name" : "JOBEnum",
+          "type": "enum",
+          "symbols": [
+            "SALESMAN",
+            "PRESIDENT",
+            "MANAGER",
+            "CLERK"
+          ]
+        }
+      },
+      { "name" : "MGR",      "type" : ["null", "int"] },
+      { "name" : "HIREDATE", "type" : ["null", "string"] },
+      { "name" : "SAL",      "type" : ["null", "double"] },
+      { "name" : "COMM",     "type" : ["null", "double"] },
+      { "name" : "DEPTNO",   "type" : "int" }
+    ]
+  },
+  {
+    "namespace":"mayton.probeavro.emp",
+    "type" : "record",
+    "name" : "Debt",
+    "fields" : [
+      { "name" : "DEBTNO",
+        "type" :{
+          "name" : "DebtNoUuidType",
+          "type" : "string",
+          "logicalType": "UUID"
+        }
+      },
+      { "name" : "DEBTNAME",  "type" : "string" },
+      { "name" : "LOC",       "type" : "string" }
+    ]
+  }
+]

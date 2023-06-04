@@ -1,0 +1,5 @@
+const Rope = struct {
+
+
+
+};

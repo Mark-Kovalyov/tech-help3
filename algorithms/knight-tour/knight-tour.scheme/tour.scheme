@@ -1,0 +1,12 @@
+; Knigth tour with lazy fetching
+
+(define (tour size x y)
+  (if (< size 5)
+    (error "Error! Unable to process knight tour with desk size less than 5")
+    ((cons-stream 1 '(2 3)))))
+
+
+(define (seq-sleep x)
+  (cons-stream x (seq-sleep (- x 1))))
+
+;

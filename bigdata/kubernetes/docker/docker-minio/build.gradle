@@ -1,0 +1,47 @@
+//  Minio
+//  ====================================================
+//  docker pull minio/minio
+//  docker run -p 9000:9000 minio/minio server /db/TR
+
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'mayton.probe'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.xbib', name: 'jsr-305', version: '1.0.0'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.2'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.2'
+    compile group: 'com.lmax', name: 'disruptor', version: '3.4.2'
+
+    compile 'io.minio:minio:6.0.8'
+
+}
+
+mainClassName = 'mayton.probe.ProbeSyslog' 
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'mayton.probe.MinioDockerRunner'
+        )
+    }
+}
+
+task copyToLib(type: Copy) {
+    into "$buildDir/libs"
+    from configurations.runtime
+}
+
+build.dependsOn(copyToLib)

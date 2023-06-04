@@ -1,0 +1,3 @@
+kubectl ::= 'kubectl' ( 'get' ('pods' | 'svc' | 'cronjob' ) | 'apply' '-f' path )
+
+path ::= string

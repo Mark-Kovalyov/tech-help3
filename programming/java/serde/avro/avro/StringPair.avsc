@@ -1,0 +1,10 @@
+{
+   "namespace":"mayton.probeavro.stringpair",
+   "type" : "record",
+   "name" : "StringPair",
+   "doc"  : "A pair of Strings",
+   "fields" : [
+       { "name" : "left", "type" : "string" },
+       { "name" : "right", "type" : "string" }
+   ]
+}

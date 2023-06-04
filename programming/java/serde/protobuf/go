@@ -1,0 +1,11 @@
+#!/bin/bash -ev
+
+protoc --java_out=src/main/java proto2/geo-ip-entity.proto
+
+protoc --java_out=src/main/java proto3/emp.proto
+
+mvn clean package
+
+
+
+
