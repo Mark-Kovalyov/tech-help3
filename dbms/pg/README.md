@@ -1,5 +1,25 @@
 # Postgresql
 
+## Ports
+|Port|Proto|Desc|
+|----|-----|----|
+|5432|TCP  |
+
+
+
+## Create user and database:
+```
+postgres=# create user mayton with password '*********';
+CREATE ROLE
+postgres=#
+postgres=# create database dht;
+CREATE DATABASE
+postgres=#
+postgres=# alter database dht owner to mayton;
+ALTER DATABASE
+```
+
+
 ## Base paths, variables
 
 Ubuntu
@@ -42,8 +62,8 @@ psql
 ```
 # select version();
 
-PostgreSQL 12.5 (Ubuntu 12.5-0ubuntu0.20.04.1) 
-on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 
+PostgreSQL 12.5 (Ubuntu 12.5-0ubuntu0.20.04.1)
+on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu
 9.3.0-17ubuntu1~20.04) 9.3.0, 64-bit
 ```
 
@@ -65,7 +85,7 @@ postgres=# \l
     johndb    | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =Tc/postgres         +
               |          |          |             |             | postgres=CTc/postgres+
               |          |          |             |             | john=CTc/postgres
-    postgres  | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+    postgres  | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
     template0 | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
               |          |          |             |             | postgres=CTc/postgres
     template1 | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres          +
@@ -95,10 +115,10 @@ SET search_path TO geoip, bookings, public;
 ```
 # \du+
                                           List of roles
- Role name |                         Attributes                         | Member of | Description 
------------+------------------------------------------------------------+-----------+-------------
- john      |                                                            | {}        | 
- postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}        | 
+ Role name |                         Attributes                         | Member of | Description
+-----------+-----------------------------------------------------------+-----------+-------------
+ john      |                                                            | {}        |
+ postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}        |
 
 ```
 
@@ -106,7 +126,7 @@ SET search_path TO geoip, bookings, public;
 
 ```
 postgres=# select current_user;
- current_user 
+ current_user
 --------------
  postgres
 (1 row)
@@ -116,7 +136,7 @@ postgres=# select current_user;
 
 ```
 postgres=# select current_schema;
- current_schema 
+ current_schema
 ----------------
  public
 (1 row)
@@ -126,22 +146,22 @@ postgres=# select current_schema;
 
 ```
 postgres=# SELECT * FROM pg_tablespace;
-  spcname   | spcowner | spcacl | spcoptions 
+  spcname   | spcowner | spcacl | spcoptions
 ------------+----------+--------+------------
- pg_default |       10 |        | 
- pg_global  |       10 |        | 
- geospace   |    16385 |        | 
+ pg_default |       10 |        |
+ pg_global  |       10 |        |
+ geospace   |    16385 |        |
 (3 rows)
 ```
 
 ```
 postgres=# \db+
                                     List of tablespaces
-    Name    |  Owner   |   Location   | Access privileges | Options |  Size  | Description 
+    Name    |  Owner   |   Location   | Access privileges | Options |  Size  | Description
 ------------+----------+--------------+-------------------+---------+--------+-------------
- geospace   | john     | /pg/geospace |                   |         | 458 MB | 
- pg_default | postgres |              |                   |         | 705 MB | 
- pg_global  | postgres |              |                   |         | 574 kB | 
+ geospace   | john     | /pg/geospace |                   |         | 458 MB |
+ pg_default | postgres |              |                   |         | 705 MB |
+ pg_global  | postgres |              |                   |         | 574 kB |
 (3 rows)
 ```
 
@@ -178,7 +198,7 @@ CREATE USER axon WITH PASSWORD 'pwd123';
 
 ## Create database with tablespace
 ```
-CREATE DATABASE axondb OWNER axon TABLESPACE axon_space; 
+CREATE DATABASE axondb OWNER axon TABLESPACE axon_space;
 ```
 
 ## Allow user to create db
@@ -187,7 +207,6 @@ ALTER USER mayton CREATEDB;
 ```
 
 ## Connect via PSQL
-
 ```
 $ psql -d johndb -U john -h localhost -p 5432
 ```
@@ -232,7 +251,7 @@ pg_dump -d dht -s -t person -f person.sql
 \dt *.*
 ```
 
-or 
+or
 ```
 \dt public.*
 ```

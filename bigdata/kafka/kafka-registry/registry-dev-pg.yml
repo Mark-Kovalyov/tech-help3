@@ -2,18 +2,19 @@ version: '3.9'
 services:
   registry-db:
     container_name: messaging-hub-registry-db
-    image: mysql:5.7.17
+    image: postgres:latest
     ports:
-      - 3307:3306
+      - 5432:5432
     volumes:
-      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./containers/registry-db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
     networks:
-      - kafka-net
+      - kaf-net
     environment:
-      MYSQL_ROOT_PASSWORD: tiger
-      MYSQL_DATABASE:      orcl
-      MYSQL_USER:          scott
-      MYSQL_PASSWORD:      tiger
+      PGHOST: 0.0.0.0
+      PGPORT: 5432
+      PGDATABASE: dht
+      PGUSER: scott
+      POSTGRES_PASSWORD: tiger
 
   registry-app:
     container_name: messaging-hub-schema-registry-app
@@ -21,10 +22,10 @@ services:
     ports:
       - 9090:9090
     networks:
-      - kafka-net
+      - kaf-net
     environment:
-      DB_NAME:     orcl
-      DB_USER:     scott
+      DB_NAME: db
+      DB_USER: scott
       DB_PASSWORD: tiger
       DB_PORT: 3306
       DB_HOST: registry-db
@@ -33,5 +34,5 @@ services:
       - registry-db
 
 networks:
-  kafka-net:
+  dp-messaging-hub-registry-net:
     driver: bridge
