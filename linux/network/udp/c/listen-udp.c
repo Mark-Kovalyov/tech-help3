@@ -5,11 +5,20 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <stdio.h>
+#include <time.h>
 
 #define TRANSMISSION_PORT   51413
 #define MAX_UDP_PACKET_SIZE 65507
 
+FILE *file = NULL;
+
+void intHandler(int dummy) {
+    fclose(file);
+}
+
 int main() {
+    signal(SIGINT, intHandler);
     int sockfd;
     struct sockaddr_in server_addr;
 
@@ -38,15 +47,42 @@ int main() {
     char buffer[1024];
     struct sockaddr_in client_addr;
     socklen_t client_len;
+    char fname[512];
+    /////////////////////////////
+    time_t rawtime;
+    struct tm * timeinfo;
 
-    while (true) {
+    int year = 2023;
+    int month = 6;
+    int day = 11;
+    int hour = 0;
+    int minu = 0;
+    int sec = 0;
+    int ms = 0;
+
+    sprintf(fname, "/bigdata/udp/%d/%d/%d/%d-%d-%d.%d.dat",
+      year,
+      month,
+      day,
+      hour,
+      minu,
+      sec,
+      ms
+    );
+
+    file = fopen(fname, "wb");
+
+    while (1) {
         ssize_t recv_len = recvfrom(sockfd, buffer, sizeof(buffer), 0,
                                    (struct sockaddr*)&client_addr, &client_len);
+        time(&rawtime);
+        timeinfo = localtime ( &rawtime );
         if (recv_len < 0) {
             perror("Error receiving data");
             exit(1);
         }
-        printf("Received: % bytes from UDPi\n", (int)recv_len);
+        printf("Received: %i bytes from UDP\n", (int)recv_len);
+        fwrite(buffer, 1, recv_len, file);
     }
 
     close(sockfd);
