@@ -13,6 +13,25 @@
 
 FILE *file = NULL;
 
+struct CurrentTimeRec {
+   int hours;
+   int minutes;
+   int seconds;
+   int mseconds;
+};
+
+void get_current_time_ms(CurrentTimeRec *currentTimeRec) {
+  struct timeval currentTime;
+  gettimeofday(&currentTime, NULL);
+  long seconds      = currentTime.tv_sec;
+  long milliseconds = currentTime.tv_usec / 1000;
+  struct tm* timeInfo = localtime(&seconds);
+  currentTimeRec->hours    = timeInfo->tm_hour;
+  currentTimeRec->minutes  = timeInfo->tm_min;
+  currentTimeRec->seconds  = timeInfo->tm_src;
+  currentTimeRec->mseconds = milliseconds;
+}
+
 void intHandler(int dummy) {
     fclose(file);
 }
@@ -52,22 +71,17 @@ int main() {
     time_t rawtime;
     struct tm * timeinfo;
 
-    int year = 2023;
-    int month = 6;
-    int day = 11;
-    int hour = 0;
-    int minu = 0;
-    int sec = 0;
-    int ms = 0;
+    struct CurrentTimeRec ctr;
+    get_current_time_ms(&ctr);
 
     sprintf(fname, "/bigdata/udp/%d/%d/%d/%d-%d-%d.%d.dat",
-      year,
-      month,
-      day,
-      hour,
-      minu,
-      sec,
-      ms
+      0,
+      0,
+      0,
+      ctr->hours,
+      ctr->minutes,
+      ctr->seconds,
+      ctr->mseconds
     );
 
     file = fopen(fname, "wb");

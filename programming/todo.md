@@ -1,4 +1,6 @@
 # TODO:
+* Network
+  * UDP-Tap - network utility to split traffic
 * Engine
   * MBE - mtns block engine
 * MCube - multidimensional fact storage
@@ -24,6 +26,12 @@
   * x86
   * ARM
 
+
+## Network
+
+```
+$ udptap --listen 192.168.1.1:5555
+```
 
 ## Emulators
 
