@@ -1,3 +1,4 @@
+#include <arpa/inet.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,12 +8,15 @@
 #include <netinet/in.h>
 #include <stdio.h>
 #include <time.h>
+#include <signal.h>
 
 #define TRANSMISSION_PORT   51413
 #define MAX_UDP_PACKET_SIZE 65507
 #define LINEBUF 65536
+#define FLUSH_EVERY 16
 
 FILE *file = NULL;
+int sockfd = 0;
 
 struct CurrentTimeRec {
    int hours;
@@ -21,7 +25,7 @@ struct CurrentTimeRec {
    int mseconds;
 };
 
-void get_current_time_ms(CurrentTimeRec *currentTimeRec) {
+void get_current_time_ms(struct CurrentTimeRec *currentTimeRec) {
   struct timeval currentTime;
   gettimeofday(&currentTime, NULL);
   long seconds      = currentTime.tv_sec;
@@ -29,19 +33,26 @@ void get_current_time_ms(CurrentTimeRec *currentTimeRec) {
   struct tm* timeInfo = localtime(&seconds);
   currentTimeRec->hours    = timeInfo->tm_hour;
   currentTimeRec->minutes  = timeInfo->tm_min;
-  currentTimeRec->seconds  = timeInfo->tm_src;
+  currentTimeRec->seconds  = timeInfo->tm_sec;
   currentTimeRec->mseconds = milliseconds;
 }
 
+int is_stopped = 0;
+
 void intHandler(int dummy) {
+    fflush(file);
+    sprintf(stderr ,"Interrupt handler!");
     fclose(file);
+    close(sockfd);
+    is_stopped = 1;
 }
 
 int main() {
     signal(SIGINT, intHandler);
-    int sockfd;
+    pid_t pid = getpid();
+    sprintf(stderr ,"PID=%d\n", pid);
+    
     struct sockaddr_in server_addr;
-
 
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sockfd < 0) {
@@ -64,32 +75,50 @@ int main() {
         exit(1);
     }
 
-    char buffer[1024];
+    char udp_buffer[1024];
     struct sockaddr_in client_addr;
+    struct sockaddr sock_addr;
     socklen_t client_len;
-    char fname[512];
+    //char fname[512];
     /////////////////////////////
-    time_t rawtime;
-    struct tm * timeinfo;
+    //time_t rawtime;
+    //struct tm * timeinfo;
 
-    struct CurrentTimeRec ctr;
-    get_current_time_ms(&ctr);
+    //struct CurrentTimeRec ctr;
+    //get_current_time_ms(&ctr);
 
+    // TODO: Fix year, month, day
+    /*
     sprintf(fname, "/bigdata/udp/%d/%d/%d/%d-%d-%d.%d.dat",
-      0,
-      0,
-      0,
-      ctr->hours,
-      ctr->minutes,
-      ctr->seconds,
-      ctr->mseconds
-    );
+      2023,
+      6,
+      17,
+      ctr.hours,
+      ctr.minutes,
+      ctr.seconds,
+      ctr.mseconds
+    );*/
 
-    file = fopen(fname, "wb");
+    file = fopen("listen-udp.log", "wb+");
+    int cnt = 0;
+    while (!is_stopped) {
+        cnt++;
+        ssize_t recv_len = recvfrom(sockfd,
+                                    udp_buffer,
+                                    sizeof(udp_buffer),
+                                    0,
+                                    &sock_addr, //(struct sockaddr*)&client_addr,
+                                    &client_len);
 
-    while (1) {
-        ssize_t recv_len = recvfrom(sockfd, buffer, sizeof(buffer), 0,
-                                   (struct sockaddr*)&client_addr, &client_len);
+        struct sockaddr_in *p_sockaddr_in = &sock_addr;
+
+        char *ip = inet_ntoa(p_sockaddr_in -> sin_addr);
+        printf("%s:%d\n", ip, p_sockaddr_in -> sin_port);
+        sprintf(file, "%s:%d\n", ip, p_sockaddr_in -> sin_port);
+        if (cnt % FLUSH_EVERY == 0) {
+          fflush(file);
+        }
+        /*
         time(&rawtime);
         timeinfo = localtime ( &rawtime );
         if (recv_len < 0) {
@@ -97,10 +126,8 @@ int main() {
             exit(1);
         }
         printf("Received: %i bytes from UDP\n", (int)recv_len);
-        fwrite(buffer, 1, recv_len, file);
+        fwrite(buffer, 1, recv_len, file);*/
     }
-
-    close(sockfd);
 
     return 0;
 }
