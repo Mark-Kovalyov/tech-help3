@@ -1,4 +1,6 @@
 # TODO:
+* Compression
+  * Smaz : https://github.com/antirez/smaz/blob/master/smaz.c
 * Network
   * UDP-Tap - network utility to split traffic
 * Engine

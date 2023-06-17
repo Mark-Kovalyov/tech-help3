@@ -10,6 +10,7 @@
 
 #define TRANSMISSION_PORT   51413
 #define MAX_UDP_PACKET_SIZE 65507
+#define LINEBUF 65536
 
 FILE *file = NULL;
 

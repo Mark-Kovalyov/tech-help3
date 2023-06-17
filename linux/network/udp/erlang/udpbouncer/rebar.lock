@@ -1,0 +1,8 @@
+{"1.2.0",
+[{<<"uef">>,{pkg,<<"uef">>,<<"2.6.0">>},0}]}.
+[
+{pkg_hash,[
+ {<<"uef">>, <<"0AA813D125C429E48C1D5ABBAB89837D8B7BD0499E6EE2F7DC9CC4287A475CFD">>}]},
+{pkg_hash_ext,[
+ {<<"uef">>, <<"1585CBA305DC7C0A3F75AEAB15937B324184673D2922148B432EDF9BEBA73D62">>}]}
+].

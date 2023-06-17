@@ -6,6 +6,104 @@
 |----|--------|
 |53  |UDP
 
+## Dns Records
+
+### A record
+
+TYPE | NAME       | IP        | TTL
+-----|------------|-----------|----
+A    |example.com |12.34.56.78| 7200
+
+### Qaud-A Record
+
+TYPE | NAME       | IP               | TTL
+-----|------------|------------------|----
+AAAA |example.com |2501:0:54::23:c2ff|7200
+
+### CNAME
+
+
+TYPE | NAME       | ALIAS TO         | TTL
+-----|------------|------------------|----
+CNAME|www.ex.com  |ex.com            |7200
+
+### Mail Records (MX)
+
+TYPE | PRIORITY   | NAME         | HOST              | TTL
+-----|------------|--------------|-------------------|------
+MX   | 10         | example.com  | mail1.example.com | 7200
+
+
+
+### SOA (start of authority)
+
+TYPE | MNAME      | RNAME            | SERIAL#           | RETRY | TTL
+-----|------------|------------------|-------------------|-------|-----
+SOA  | ns1.ex.com | admin.example.com| 57468268          | 60    | 7200
+
+* ns1.ex.com - primary name server
+* admin.example.com - email address of the administrator
+
+### NS
+
+TYPE | VALUE      | NAME        | TTL
+-----|------------|-------------|-------
+NS   | ns1.ex.com | example.com | 7200
+NS   | ns2.ex.com | example.com | 7200
+
+### SRV
+
+TYPE | PRIORITY   | SERVICE          | PORT | NAME        | WEIGHT | TTL
+-----|------------|------------------|------|-------------|--------|-----
+SRV  |    10      | XMPP             | 5223 | example.com |   5    | 86400
+
+#### advanced SRV fields from Cloudflare
+
+  KEY | VALUE
+------|-------
+proto | TCP
+class | IN
+target| server.example.com
+
+### PTR
+TYPE | IP-ADDR    | NAME             | TTL
+-----|------------|------------------|-----
+PTR  | 44.44.44.44| ex.info          | 1000
+
+### TXT (general contact information)
+
+TYPE | NAME       | VALUE            | TTL
+-----|------------|------------------|-----
+PTR  | 44.44.44.44| ex.info          | 1000
+
+
+* Point to specific service with port number
+  * Voice IP
+  * Twitter
+  * ....
+
+### SPF (?)
+
+SPF records are a type of DNS TXT record commonly used for email authentication. SPF records include a list of IP addresses and domains authorized to send emails from that domain.
+
+#### example
+* DNS ZONE1
+  * shop.example.com
+  * blog.example.com
+* DNS ZONE2
+  * support.example.com
+
+### Hierachy
+
+```
+example.com => [.] [com] [example]
+               root
+                   top
+                         2st level
+```
+
+
+
 ## Format Request
 
 ```rust

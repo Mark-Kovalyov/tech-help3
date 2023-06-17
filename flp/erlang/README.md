@@ -69,6 +69,11 @@ Erlang/OTP 22 [erts-10.6.4] [source] [64-bit] [smp:12:12] [ds:12:12:10] [async-t
 Eshell V10.6.4  (abort with ^G)
 ```
 
+## Exit
+```
+
+```
+
 ## Compile .beam
 
 ```
@@ -126,3 +131,28 @@ io:fwrite("Hello world!~n", []).
                  y :: double,
                  z :: double}).
 ```
+
+## Make release
+
+
+Create a release configuration file, typically named sys.config, which defines the system configuration parameters for your application.
+```
+rebar3 release
+```
+
+## Add dependencies
+
+Add uef:2.6.0
+
+rebar.config
+```
+{deps, [
+    {uef, "2.6.0"}
+]
+}.
+
+```
+
+## Package manager
+
+https://hex.pm/
