@@ -1,14 +1,19 @@
 HOME=~
 
-test:
-	gcc -I/($HOME)/include -L/($HOME)/lib -g test-mq.c -o test-mq
+
+# ./listen-udp 54639 | tee -a /bigdata/udp/udp-54639.csv
+# ./listen-udp 55527 | tee -a /bigdata/udp/udp-55527.csv
+# ./listen-udp  6771 | tee -a /bigdata/udp/udp-6771.csv
 
 
-test2:
-	gcc -g test-mq.c -o test-mq
+run: compile
+	./listen-udp 51413 | tee -a /bigdata/udp/udp-51413.csv
 
-go: test
-	gcc -g listen-udp.c -o listen-udp
+compile:
+	gcc -Wno-incompatible-pointer-types -g -std=c99 listen-udp.c -o listen-udp
 
-prepare:
-	apt-get install libcriterion-dev
+compile-release:
+	gcc -Wno-incompatible-pointer-types -std=c99 listen-udp.c -o listen-udp
+
+saferun: compile
+	valgrind --leak-check=yes ./listen-udp

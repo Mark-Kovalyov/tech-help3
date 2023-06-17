@@ -9,49 +9,51 @@
 #include <stdio.h>
 #include <time.h>
 #include <signal.h>
+#include <sys/time.h>
 
-#define TRANSMISSION_PORT   51413
+#include "listen-udp.h"
+
 #define MAX_UDP_PACKET_SIZE 65507
 #define LINEBUF 65536
 #define FLUSH_EVERY 16
 
-FILE *file = NULL;
 int sockfd = 0;
 
-struct CurrentTimeRec {
-   int hours;
-   int minutes;
-   int seconds;
-   int mseconds;
-};
+int is_stopped = 0;
 
-void get_current_time_ms(struct CurrentTimeRec *currentTimeRec) {
+void intHandler(int dummy) {
+    fprintf(stderr ,"Interrupt handler!");
+    close(sockfd);
+    signal(SIGINT, SIG_DFL);
+}
+
+void get_current_time_ms(struct current_time_rec *ctr) {
   struct timeval currentTime;
   gettimeofday(&currentTime, NULL);
   long seconds      = currentTime.tv_sec;
   long milliseconds = currentTime.tv_usec / 1000;
   struct tm* timeInfo = localtime(&seconds);
-  currentTimeRec->hours    = timeInfo->tm_hour;
-  currentTimeRec->minutes  = timeInfo->tm_min;
-  currentTimeRec->seconds  = timeInfo->tm_sec;
-  currentTimeRec->mseconds = milliseconds;
+  ctr->year     = timeInfo->tm_year + 1900;
+  ctr->month    = timeInfo->tm_mon;
+  ctr->day      = timeInfo->tm_mday;
+  ctr->hours    = timeInfo->tm_hour;
+  ctr->minutes  = timeInfo->tm_min;
+  ctr->seconds  = timeInfo->tm_sec;
+  ctr->mseconds = milliseconds;
 }
 
-int is_stopped = 0;
-
-void intHandler(int dummy) {
-    fflush(file);
-    sprintf(stderr ,"Interrupt handler!");
-    fclose(file);
-    close(sockfd);
-    is_stopped = 1;
-}
-
-int main() {
+int main(int argc, char **argv) {
+    if (argc == 1) {
+      fprintf(stderr ,"Usage :\n    listen-udp [udp-port]");
+      return 1;
+    }
     signal(SIGINT, intHandler);
     pid_t pid = getpid();
-    sprintf(stderr ,"PID=%d\n", pid);
-    
+    //int pid_file = fopen("listen-udp.pid","wt");
+    //sprintf(pid_file ,"%d", pid);
+    //fclose(pid_file);
+    fprintf(stderr ,"PID=%d\n", pid);
+
     struct sockaddr_in server_addr;
 
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
@@ -61,14 +63,14 @@ int main() {
     }
 
     int reuse = 1;
-    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEPORT, &reuse, sizeof(reuse)) < 0) {
+    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse)) < 0) {
         perror("Error setting socket option");
         exit(1);
     }
 
     server_addr.sin_family      = AF_INET;
     server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    server_addr.sin_port        = htons(TRANSMISSION_PORT);
+    server_addr.sin_port        = htons(atoi(argv[1]));
 
     if (bind(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
         perror("Error binding socket");
@@ -79,55 +81,42 @@ int main() {
     struct sockaddr_in client_addr;
     struct sockaddr sock_addr;
     socklen_t client_len;
-    //char fname[512];
-    /////////////////////////////
-    //time_t rawtime;
-    //struct tm * timeinfo;
+    char fname[512];
 
-    //struct CurrentTimeRec ctr;
-    //get_current_time_ms(&ctr);
-
-    // TODO: Fix year, month, day
-    /*
-    sprintf(fname, "/bigdata/udp/%d/%d/%d/%d-%d-%d.%d.dat",
-      2023,
-      6,
-      17,
-      ctr.hours,
-      ctr.minutes,
-      ctr.seconds,
-      ctr.mseconds
-    );*/
-
-    file = fopen("listen-udp.log", "wb+");
     int cnt = 0;
-    while (!is_stopped) {
+    while (1) {
         cnt++;
+
         ssize_t recv_len = recvfrom(sockfd,
                                     udp_buffer,
                                     sizeof(udp_buffer),
                                     0,
-                                    &sock_addr, //(struct sockaddr*)&client_addr,
+                                    &sock_addr,
                                     &client_len);
+
+        if (recv_len < 0) {
+            continue;
+        }
+
+        time_t rawtime;
+        struct tm * timeinfo;
+        struct current_time_rec ctr;
+        get_current_time_ms(&ctr);
 
         struct sockaddr_in *p_sockaddr_in = &sock_addr;
 
         char *ip = inet_ntoa(p_sockaddr_in -> sin_addr);
-        printf("%s:%d\n", ip, p_sockaddr_in -> sin_port);
-        sprintf(file, "%s:%d\n", ip, p_sockaddr_in -> sin_port);
-        if (cnt % FLUSH_EVERY == 0) {
-          fflush(file);
-        }
-        /*
-        time(&rawtime);
-        timeinfo = localtime ( &rawtime );
-        if (recv_len < 0) {
-            perror("Error receiving data");
-            exit(1);
-        }
-        printf("Received: %i bytes from UDP\n", (int)recv_len);
-        fwrite(buffer, 1, recv_len, file);*/
+        // TODO: Fix year,month,day
+        printf("%04d-%02d-%02d %02d:%02d:%02d.%03d;%s;%d\n",
+          ctr.year,
+          ctr.month,
+          ctr.day,
+          ctr.hours,
+          ctr.minutes,
+          ctr.seconds,
+          ctr.mseconds,
+          ip,
+          p_sockaddr_in -> sin_port);
     }
 
-    return 0;
 }
