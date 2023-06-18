@@ -1,5 +1,8 @@
 # Geo search systems
 
+## MaxMind
+
+
 ## Geo street map
 
 https://planet.openstreetmap.org/
@@ -18,8 +21,8 @@ https://planet.openstreetmap.org/pbf/planet-latest.osm.pbf
 
 ### Parse
 
-PBF (Protocol Buffer Binary Format) is a binary format for OpenStreetMap data. 
-In order to parse PBF files, you will need to use a programming language that supports the Protocol Buffers 
+PBF (Protocol Buffer Binary Format) is a binary format for OpenStreetMap data.
+In order to parse PBF files, you will need to use a programming language that supports the Protocol Buffers
 library. Here are the general steps you can follow:
 
 * Install the Protocol Buffers library for your programming language.
@@ -53,9 +56,9 @@ if __name__ == '__main__':
 
 ```
 
-This example uses the Osmium library, which is a C++ library that provides Python bindings for parsing 
-OpenStreetMap data in PBF format. The OSMHandler class defines a method node that will be called for each 
+This example uses the Osmium library, which is a C++ library that provides Python bindings for parsing
+OpenStreetMap data in PBF format. The OSMHandler class defines a method node that will be called for each
 node in the PBF file. The reader.apply(handler) method reads the PBF file and applies the handler to each object in the file.
 
-You can customize the OSMHandler class to process the OpenStreetMap data as needed. For example, you can 
+You can customize the OSMHandler class to process the OpenStreetMap data as needed. For example, you can
 define methods to handle ways and relations, or you can filter the data to only process certain tags.

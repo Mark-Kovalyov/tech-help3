@@ -1,5 +1,45 @@
 # DNS
 
+## Toolset
+
+### dnswalk
+```
+dnswalk version [unknown] calling Getopt::Std::getopts (version 1.12 [paranoid]),
+running under Perl version 5.30.0.
+
+Usage: dnswalk [-OPTIONS [-MORE_OPTIONS]] [--] [PROGRAM_ARG1 ...]
+
+The following single-character options are accepted:
+	With arguments: -D
+	Boolean (without arguments): -r -f -i -a -d -m -F -l
+
+Options may be merged together.  -- stops processing of options.
+Space is not required between options and their arguments.
+  [Now continuing due to backward compatibility and excessive paranoia.
+   See 'perldoc Getopt::Std' about $Getopt::Std::STANDARD_HELP_VERSION.]
+Usage: dnswalk domain
+domain MUST end with a '.'
+```
+### dig
+```
+NAME
+       dig - DNS lookup utility
+
+SYNOPSIS
+       dig [@server] [-b address] [-c class] [-f filename] [-k filename] [-m] [-p port#]
+           [-q name] [-t type] [-v] [-x addr] [-y [hmac:]name:key] [[-4] | [-6]] [name] [type]
+           [class] [queryopt...]
+
+       dig [-h]
+
+       dig [global-queryopt...] [query...]
+```
+
+```
+dig srv _xmpp._tcp.mail.ru
+```
+
+
 ## Network
 
 |Port|Protocol|

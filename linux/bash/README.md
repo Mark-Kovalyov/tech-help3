@@ -1,5 +1,15 @@
 # Bash
 
+## Make node
+```
+mknod p node01
+```
+
+## Select 2th field from CSV
+```
+cat /orcl/scott/emp.csv | cut -d';' -f2 |
+```
+
 ## Bzip2 all csv files in current folder:
 
 ```
@@ -56,6 +66,15 @@ This is coming from the stdin
 EOF
 ```
 
+## Iterate over text file
+```
+for i in `cat links.lst`
+do
+  echo "--------------- $i ---------------------"
+  
+done
+```
+
 ## Iterate over STDIN lines
 ```
 #!/bin/bash
@@ -66,6 +85,7 @@ while read line; do
 done
 
 ```
+
 ```
 while read -r line; do
   echo "$line"

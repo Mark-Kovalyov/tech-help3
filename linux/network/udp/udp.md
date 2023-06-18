@@ -1,6 +1,9 @@
 # Listen UDP port
 
-SO_REUSEPORT
+SO_REUSEPORT - is deprecated
+SO_REUSEADDR
+
+See the https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c617f398edd4db2b8567a28e899a88f8f574798d
 
 ## Transmission
 
