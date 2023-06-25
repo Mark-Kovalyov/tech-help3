@@ -35,7 +35,7 @@ zookeeper.connect=localhost:2181
 ```
 
 * Coordinator - responsible for managing the members of the group as well
-  as their partition assigments
+g  as their partition assigments
 
 
 # Start
@@ -221,9 +221,9 @@ consumer.commitSync();
 
 ## Offset  management
 
-| |At most once(максимум 1 раз)|At least once(хотя-бы 1 раз)|Exactly once|
-|-|-|-|-|
-|Offset commit|When msg received|When msg processed|Transactional consumer + idenpotent producer|
+|             |At most once(максимум 1 раз)|At least once(хотя-бы 1 раз)|Exactly once                                |
+|-------------|----------------------------|----------------------------|--------------------------------------------|
+|Offset commit|When msg received           |When msg processed          |Transactional consumer + idenpotent producer|
 |Speed|High|Moderate|Lowest|
 |Delivery guarantee|Data loss possible|No loss, can receive message multiple times|Message Delivered only 1 time|
 |Use case|Log agregation, metric collection|ATM transactions|Financial transactions|

@@ -1,5 +1,11 @@
 # Spark shell uses
 
+## Run with custom dependency (jar)
+
+```
+$ spark-shell --jars 
+```
+
 ## Import AVRO package
 
 ```

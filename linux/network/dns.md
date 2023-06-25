@@ -34,11 +34,62 @@ SYNOPSIS
 
        dig [global-queryopt...] [query...]
 ```
+#### examples:
+```
+$ dig srv _xmpp._tcp.mail.ru
+
+.....
+
+$ dig geeksforgeeks.org MX
+
+; <<>> DiG 9.18.12-0ubuntu0.22.04.1-Ubuntu <<>> geeksforgeeks.org MX
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 41479
+;; flags: qr rd ad; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 0
+;; WARNING: recursion requested but not available
+
+;; QUESTION SECTION:
+;geeksforgeeks.org.             IN      MX
+
+;; ANSWER SECTION:
+geeksforgeeks.org.      0       IN      MX      10 alt4.aspmx.l.google.com.
+geeksforgeeks.org.      0       IN      MX      5 alt1.aspmx.l.google.com.
+geeksforgeeks.org.      0       IN      MX      5 alt2.aspmx.l.google.com.
+geeksforgeeks.org.      0       IN      MX      1 aspmx.l.google.com.
+geeksforgeeks.org.      0       IN      MX      10 alt3.aspmx.l.google.com.
+
+;; Query time: 59 msec
+;; SERVER: 172.20.80.1#53(172.20.80.1) (UDP)
+;; WHEN: Sat Jun 24 22:34:03 EEST 2023
+;; MSG SIZE  rcvd: 242
+```
+
+#### Peek speific DNS server
+```
+dig geeksforgeeks.org @8.8.8.8
+```
+#### Reversed DNS
+```
+dig +noall +answer -x 8.8.8.8
+```
+
+### nslookup
 
 ```
-dig srv _xmpp._tcp.mail.ru
-```
+NAME
+       nslookup - query Internet name servers interactively
 
+SYNOPSIS
+       nslookup [-option] [name | -] [server]
+
+DESCRIPTION
+       nslookup  is a program to query Internet domain name servers.  nslookup has two modes: interactive and non-inter‐
+       active. Interactive mode allows the user to query name servers for information about various hosts and domains or
+       to  print a list of hosts in a domain.  Non-interactive mode prints just the name and requested information for a
+       host or domain.
+
+```
 
 ## Network
 

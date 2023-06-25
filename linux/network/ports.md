@@ -1,5 +1,11 @@
 # Well known ports
 
+Name            |Range
+----------------|---------------
+Well Known Ports| 0 - 1023
+Registered Ports| 1024 - 49151
+Dynamic/Private | 49152 - 65535
+
 Port    | Service
 --------|---------
 20 & 21 | FTP (File Transfer Protocol)

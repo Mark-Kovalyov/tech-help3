@@ -11,7 +11,7 @@
   * Merkle-tree as index
 * CLI for logfiles searh (lfsearch)
   * tri-gramm indexing
-  * partitioning by date
+  * partitioning by date (online?)
 * CLI for binary file replacements (breplace)
   * replace bytes 'ff ef' on 'da cb'
 * CLI for text replacement (treplace)
@@ -27,6 +27,42 @@
 * Emulators
   * x86
   * ARM
+
+## Log-split
+
+* Working streamable
+* Uses standard ISO-8601 date format
+* Rotate 1 day by default
+* yyyy/MM/dd/stdout-yyyy-MM-dd.log
+
+### Console:
+
+Default:
+```
+$ ./myapp | logsplit
+```
+With destination
+```
+$ ./myapp | logsplit -d /var/log/myapp
+```
+
+
+### Input file (log file or STDOUT)
+```
+2022-09-27 18:01:00.000 [Info] Start application
+2022-10-30 01:20:00.000 [Info] Stop Application
+```
+
+### Output file structure
+```
+[2022]
+ +- [09]
+ |    +- [27]
+ |         +- stdout-2022-09-27.log
+ +- [10]
+      +- [30]
+           +- stdout-2022-10-30.log
+```
 
 
 ## Network
@@ -218,6 +254,7 @@ $ aencode input.data output.wav
   * Representation of received data in bit
 
 
+###
 
 ### Dot product
 
@@ -244,6 +281,7 @@ sox -n -r 8000 output.wav synth 15 sine 260
 
 Convert raw file to wave
 ```
+sox
 ```
 
 ### Phone modem protocols
@@ -252,7 +290,7 @@ Convert raw file to wave
 |------------------------|----------|----------|------|
 |V92 (56 kbit/s)         | digital  |56 kbit/s | 2000 |
 |V34                     | trellis  |33 kbit/s | 1996 |
-|4,800 bit/s (1600 baud) | DPSK     |4.8 kbit/s|      |
+|4,800 bit/s (1600 baud) | DPSK     |4.8 kbit/s| ?    |
 |V.22bis                 | QAM      |2.4 kbit  | 1984 |
 |V.22                    | QPSK     |1.2 kbit  | 1980 |
 

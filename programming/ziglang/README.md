@@ -2,7 +2,19 @@
 
 See: https://www.youtube.com/watch?v=J6ZxxnSp_fY
 
-## Project template (TBD)
+## Install
+```
+$ snap install zig --classic --beta
+
+$ zig version
+0.10.1
+```
+
+## Project template
+```
+
+```
+
 
 ## Conditional compillation
 
