@@ -1,0 +1,22 @@
+<configuration>
+    <!--
+    MDC Tokens that supports Apache Ftp:
+        session 	A unique session ID, the same available from FtpSession.getSessionId()
+        userName 	The user name of the user, only available after the USER command has been issued
+        remoteAddress 	The IP and local port of the client
+        remoteIp 	The IP of the client
+        remotePort 	The port used for the socket at the client
+        localAddress 	The local IP and port of the server for this session
+        localIp 	The local IP of the server for this session
+        localPort 	The local port of the server for this session
+    -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d [%-5level] %X{userName}@%X{remoteIp} %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
