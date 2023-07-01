@@ -1,5 +1,11 @@
 # SSD
 
+## links
+
+- https://codecapsule.com/2014/02/12/coding-for-ssds-part-1-introduction-and-table-of-contents/
+- https://codecapsule.com/2014/02/12/coding-for-ssds-part-2-architecture-of-an-ssd-and-benchmarking/
+
+
 ## properties
 * Block 512 bytes
 * Pagesize 4K
