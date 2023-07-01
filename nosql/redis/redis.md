@@ -7,6 +7,12 @@
 |6379|TCP |
 
 
+## Connect to redis with TLS socket protocol
+
+```
+$ redis-cli --tls -h host005.cache.azure.net -p 55555 -a "*******************"
+```
+
 ## Start server with Docker
 
 ```
