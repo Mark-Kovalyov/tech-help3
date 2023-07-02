@@ -281,7 +281,7 @@ sox -n -r 8000 output.wav synth 15 sine 260
 
 Convert raw file to wave
 ```
-sox
+sox ....
 ```
 
 ### Phone modem protocols
@@ -294,7 +294,7 @@ sox
 |V.22bis                 | QAM      |2.4 kbit  | 1984 |
 |V.22                    | QPSK     |1.2 kbit  | 1980 |
 
-![alt text](modem-protocol.png)
+![Modem modulations](modems-modulations.png)
 
 
 ### ZX-Spectrum tape protocol
