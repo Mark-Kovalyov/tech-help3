@@ -22,6 +22,7 @@ int sockfd = 0;
 int is_stopped = 0;
 
 void intHandler(int dummy) {
+    fflush(stdout);
     fprintf(stderr ,"Interrupt handler!");
     close(sockfd);
     signal(SIGINT, SIG_DFL);
@@ -49,9 +50,6 @@ int main(int argc, char **argv) {
     }
     signal(SIGINT, intHandler);
     pid_t pid = getpid();
-    //int pid_file = fopen("listen-udp.pid","wt");
-    //sprintf(pid_file ,"%d", pid);
-    //fclose(pid_file);
     fprintf(stderr ,"PID=%d\n", pid);
 
     struct sockaddr_in server_addr;
@@ -63,6 +61,7 @@ int main(int argc, char **argv) {
     }
 
     int reuse = 1;
+
     if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse)) < 0) {
         perror("Error setting socket option");
         exit(1);
@@ -106,7 +105,7 @@ int main(int argc, char **argv) {
         struct sockaddr_in *p_sockaddr_in = &sock_addr;
 
         char *ip = inet_ntoa(p_sockaddr_in -> sin_addr);
-        // TODO: Fix year,month,day
+
         printf("%04d-%02d-%02d %02d:%02d:%02d.%03d;%s;%d\n",
           ctr.year,
           ctr.month,
@@ -117,6 +116,8 @@ int main(int argc, char **argv) {
           ctr.mseconds,
           ip,
           p_sockaddr_in -> sin_port);
+
+        fflush(stdout);
     }
 
 }

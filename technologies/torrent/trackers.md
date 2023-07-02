@@ -65,14 +65,18 @@ udp6|16680
   * UPnP, NAT Port Mapping Protocol и NAT traversal
   * mTP
   * Proxy
-  * bc:// (BitComet
+  * bc:// (BitComet)
   * IPv6
 
 ## Top rated
 
+https://torrent.ubuntu.com/announce
+https://ipv6.torrent.ubuntu.com/announce
 http://bt.t-ru.org
-udp://opentor.net:6969
 http://tracker.openbittorrent.com:80/announce
+http://tracker.gbitt.info/announce
+http://korsars.pro/bt/announce.php?uk=04l189zLQI
+udp://opentor.net:6969
 udp://tracker.opentrackr.org:1337/announce
 udp://p4p.arenabg.com:1337/announce
 udp://tracker.dler.org:6969/announce

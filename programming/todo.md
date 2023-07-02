@@ -294,6 +294,8 @@ sox
 |V.22bis                 | QAM      |2.4 kbit  | 1984 |
 |V.22                    | QPSK     |1.2 kbit  | 1980 |
 
+![alt text](modem-protocol.png)
+
 
 ### ZX-Spectrum tape protocol
 
