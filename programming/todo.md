@@ -286,13 +286,16 @@ sox ....
 
 ### Phone modem protocols
 
-|Connection              |Modulation|Bit rate  | Year |
-|------------------------|----------|----------|------|
-|V92 (56 kbit/s)         | digital  |56 kbit/s | 2000 |
-|V34                     | trellis  |33 kbit/s | 1996 |
-|4,800 bit/s (1600 baud) | DPSK     |4.8 kbit/s| ?    |
-|V.22bis                 | QAM      |2.4 kbit  | 1984 |
-|V.22                    | QPSK     |1.2 kbit  | 1980 |
+|Connection              |Modulation|Bit rate    | Year | Stars |
+|------------------------|----------|------------|------|-------|
+|V92 (56 kbit/s)         | digital  |56 kbit/s   | 2000 |
+|V34                     | trellis  |33 kbit/s   | 1996 |
+|V34(?)                  |          |28800 bit/s |      | 640
+|V32bis                  |          |14400 bit/s |      | 128
+|V32                     |          |9600 bit/s  |      |  16    
+|4,800 bit/s (1600 baud) | DPSK     |4.8 kbit/s  | ?    |
+|V.22bis                 | QAM      |2.4 kbit    | 1984 |
+|V.22                    | QPSK     |1.2 kbit    | 1980 |
 
 ![Modem modulations](modems-modulations.png)
 
