@@ -2,7 +2,6 @@
 
 ## Install
 
-
 https://neo4j.com/download-center/#community
 https://dist.neo4j.org/cypher-shell/cypher-shell-5.2.0.zip
 

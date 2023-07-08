@@ -14,7 +14,6 @@ fn solve() {
     }
 }
 
-
 pub fn main() void {
     x1,x2 = solve(a, b, c)
     std.debug.print("Hello, {s}!\n", .{"World"});

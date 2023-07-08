@@ -3,13 +3,29 @@ package mayton.spark
 import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.streaming.{OutputMode, Trigger}
-
 import org.apache.spark.sql.types.StructType
+
 import java.nio.file.Files._
+import scala.util.matching.{Regex, UnanchoredRegex}
 
 object UdpStreamer {
 
   def main(args : Array[String]) : Unit = {
+
+    def ip2numf2(ip:String) : Option[Long] = {
+      val ipr = "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})".r
+      ip match {
+        case ipr(c1,c2,c3,c4) => Some(0L)
+        case _ => None
+      }
+    }
+
+    def ip2numf(ip: String): Option[Long] = {
+      if (ip == "-") return None
+      val c: Array[Long] = ip.split("\\.").map(x => x.toLong)
+      Some(c(0) << 24 + c(1) << 16 + c(2) << 8 + c(3))
+    }
+
 
     val spark: SparkSession = SparkSession
       .builder

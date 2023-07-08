@@ -1,5 +1,16 @@
 # NFS
 
+## NFS3-4
+
+Feature|NFS4|NFS4
+-------|----|-----
+Protocol Versions|mid-1990s|2000s
+Statefulness|stateless|stateful
+Security|host-based authentication|Kerberos-based authentication
+File Locking|is no mandatory locking mechanism|includes mandatory file locking
+Performance| |improved caching mechanisms
+
+
 ## Firewall rules
 
 ```
@@ -63,7 +74,7 @@ rpcinfo -p
 If the timeout is happened during mount then
 
 ```
-/etc/sysconfig/nfs 
+/etc/sysconfig/nfs
 +SECURE_NFS=no.
 ```
 
@@ -74,12 +85,12 @@ Check ports is opened
 ```
 nc -zv 192.168.1.200 111
 Connection to 192.168.1.200 111 port [tcp/sunrpc] succeeded!
- 
+
 nc -zv 192.168.1.200 2049
 Connection to 192.168.1.200 2049 port [tcp/nfs] succeeded!
 ```
 
-Mount 
+Mount
 ```
 mount 192.168.1.200:/nfsshare /mnt/nfsshare
 ```
@@ -88,4 +99,3 @@ Mount NFS4
 ```
 mount -t nfs4 <host>:/ <mountpoint>
 ```
-

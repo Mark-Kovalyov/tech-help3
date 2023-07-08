@@ -11,7 +11,7 @@ go: compile
 	./01-square-eq 4.0 5.0 -6.0
 
 dump-asm:
-	gcc -g -S 01-square-eq.c
+	gcc -g0 -S 01-square-eq.c
 
 dump: clean compile_debug
 	objdump -S -l 01-square-eq.o > 01-square-eq.dump

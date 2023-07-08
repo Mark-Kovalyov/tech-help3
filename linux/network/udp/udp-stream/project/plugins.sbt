@@ -1,0 +1,1 @@
+useCoursier := false

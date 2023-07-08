@@ -144,9 +144,35 @@ NS   | ns2.ex.com | example.com | 7200
 
 ### SRV
 
-TYPE | PRIORITY   | SERVICE          | PORT | NAME        | WEIGHT | TTL
------|------------|------------------|------|-------------|--------|-----
-SRV  |    10      | XMPP             | 5223 | example.com |   5    | 86400
+TYPE | PRIORITY   | SERVICE          | PORT | NAME          | WEIGHT | TTL
+-----|------------|------------------|------|---------------|--------|-----
+SRV  |    10      | XMPP             | 5223 | example.com   |   5    | 86400
+SRV  |    5       | imap             |  993 | imap.gmai.com |   0    |
+SRV  |    0       | http             |   80 | example.com   |   0
+SRV  |    0       | smtp             |   25 | example.com   |   0
+
+
+Where:
+* name : _service._protocol.domain (_imaps._tcp.gmail.com)
+	* value will be : priority weight port targer
+	  (5 0 993 imap.gmail.com)
+* services:
+  * imap
+	* submission
+	* minecraft
+* protocol
+  * TCP
+* TTL: The TTL of this record in seconds. The TTL of all SRV records for a single owner name must be identical.
+* Priority: The priority of this endpoint as a 16-bit unsigned integer value. The SRV record or records with the lowest priority value among endpoints are used first.
+* Weight: A 16-bit unsigned integer value. Weights are relative. Clients use weight to select randomly among endpoints with identical priority values.
+
+```
+$ dig _imaps._tcp.gmail.com SRV
+
+;; ANSWER SECTION:
+_imaps._tcp.gmail.com.  0       IN      SRV     5 0 993 imap.gmail.com.
+```
+
 
 #### advanced SRV fields from Cloudflare
 
@@ -177,12 +203,20 @@ PTR  | 44.44.44.44| ex.info          | 1000
 
 SPF records are a type of DNS TXT record commonly used for email authentication. SPF records include a list of IP addresses and domains authorized to send emails from that domain.
 
+### DNSKEY (?)
+
+### CAA (?)
+
+
+
 #### example
 * DNS ZONE1
   * shop.example.com
   * blog.example.com
 * DNS ZONE2
   * support.example.com
+
+
 
 ### Hierachy
 

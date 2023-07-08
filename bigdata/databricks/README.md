@@ -6,9 +6,12 @@
 * News : https://databricks.com/newsroom
 * Spark packages : https://spark-packages.org/
 
-|Cluster Runtime|Software               |Delta Lake|End of support|
-|---------------|-----------------------|----------|--------------|
+|Cluster Runtime|Software               |Delta Lake|End of support|Features                        |
+|---------------|-----------------------|----------|--------------|--------------------------------|
+|13.2           |                       |          |              |Liquid Clustering
 |12.2 LTS       |Spark 3.3.2            |          | Mar 1, 2026  |
+|12.2 LTS(ML)   |                       |          |              |CUDA 11.3,cuDNN 8.0.5.39,NCCL 2.9.9,TensorRT 7.2.2
+|               |                       |          |              |
 |11.3 LTS       |Spark 3.3.0            |
 |10.5 ML        |Scala 2.12, Spark 3.2.1|1.2.1
 |10.5 LTS       |Scala 2.12, Spark 3.2.1|1.2.1
