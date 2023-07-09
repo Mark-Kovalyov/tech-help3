@@ -1,4 +1,9 @@
-# Linux 
+# Linux
+
+## Forums
+
+* LINUX.ORG.RU https://www.linux.org.ru/forum/development/
+
 
 ## Create flash USB-stick from .iso image
 

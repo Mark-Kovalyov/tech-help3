@@ -5,6 +5,8 @@
 wget -r -l 2 --accept=txt,html http://www.lib.ru/ADAMS/
 ```
 
+## Download with proxy
+
 ## Help
 ```
 Usage: wget [OPTION]... [URL]...
